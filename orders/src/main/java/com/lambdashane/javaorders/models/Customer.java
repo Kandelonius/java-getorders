@@ -1,5 +1,7 @@
 package com.lambdashane.javaorders.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,11 +29,13 @@ public class Customer
     @ManyToOne
     @JoinColumn(name = "agentcode",
         nullable = false)
+    @JsonIgnoreProperties("customers")
     private Agent agent;
 
     @OneToMany(mappedBy = "customer",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
+    @JsonIgnoreProperties("customer")
     private Set<Order> order = new HashSet<>();
 
     public Customer(
