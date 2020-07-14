@@ -9,4 +9,6 @@ public interface CustomerServices
     Customer save(Customer customer);
 
     List<Customer> findAllCustomers();
+
+    Customer findById(long id);
 }
