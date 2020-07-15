@@ -27,13 +27,13 @@ public class CustomerServicesImpl implements CustomerServices
     @Override
     public List<Customer> findAllCustomers()
     {
-        List<Customer> rtnlList = new ArrayList<>();
+        List<Customer> rtnList = new ArrayList<>();
 
         custrepos.findAll()
             .iterator()
-            .forEachRemaining(rtnlList::add);
+            .forEachRemaining(rtnList::add);
 
-        return rtnlList;
+        return rtnList;
     }
 
     @Override
@@ -43,5 +43,22 @@ public class CustomerServicesImpl implements CustomerServices
 
         return custrepos.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Customer "+id+" does not exist!"));
+    }
+
+    @Override
+    public Customer findByCustnameIgnoringCase(String custname)
+    {
+        Customer c = custrepos.findByCustnameIgnoringCase(custname);
+        if(c == null)
+        {
+            throw new EntityNotFoundException("Customer "+custname+" not found!");
+        }
+        return c;
+    }
+
+    @Override
+    public List<Customer> findByNameLike(String subname)
+    {
+        return custrepos.findByCustnameContainingIgnoreCase(subname);
     }
 }
